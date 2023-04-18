@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap-5.3.0-alpha1-dist/bootstrap-5.3.0-alpha1-dist/css/bootstrap.css">
+</head>
+<body onload="display()">
+    <div class="m-3">
+        <marquee behavior="" direction="" class="fw-bold fs-4">Student Registration Portal</marquee>
+        <input type="text" placeholder="Input Name" class="form-control" id="sname">
+        <input type="email" placeholder="Input E-mail" class="form-control my-2" id="sEmail">
+        <input type="text" placeholder="Input Student ID " class="form-control my-2" id="sid">
+        <button type="submit" class="btn w-100 btn-primary fs-4 fw-bold" onclick="register()">Register</button>
+        <table class="table ">
+            <tr>
+                <td class="fw-bold">S/N</td>
+                <td class="fw-bold">Student Name</td>
+                <td class="fw-bold">Student E-mail</td>
+                <td class="fw-bold">Student ID</td>
+            </tr>
+            <tbody id="disp" >
+    
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        var show = []
+        function register() {
+            var disp = document.getElementById("disp");
+            var sname = document.getElementById("sname").value;
+            var sEmail = document.getElementById("sEmail").value;
+            var sid = document.getElementById("sid").value;
+            var student = {
+                name:sname,
+                email:sEmail,
+                id:sid,
+            }
+            show.push(student)
+            display()
+            console.log(show);
+        }
+        function display() {
+                disp.innerHTML = ""
+                for (var index = 0; index < show.length; index++) {
+                    disp.innerHTML += `
+                    
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${show[index].name}</td>
+                        <td>${show[index].email}</td>
+                        <td>${show[index].id}</td>
+                        
+                        
+                        </tr>
+                   
+                    `
+                }
+                sname.value = ""
+                sEmail.value = ""
+                sid.value = ""
+            }
+    </script>
+</body>
+</html>

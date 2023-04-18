@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="./bootstrap-5.3.0-alpha1-dist/bootstrap-5.3.0-alpha1-dist/css/bootstrap.css">
+        <script src="./bootstrap-5.3.0-alpha1-dist/bootstrap-5.3.0-alpha1-dist/js/bootstrap.js"></script>
+    </head>
+    <body onload="displayitem()">
+        
+        <!-- Button trigger modal -->
+        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Edit Item
+        </button>
+         -->
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" placeholder="item name" class="form-control p-2" id="one">
+                    <input type="text" placeholder="item price" class="form-control my-2 p-2" id="two">
+                    <input type="text" placeholder="Quntity" class="form-control p-2" id="three">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="update()" data-bs-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+        <div class="d-flex m-4">
+            <input type="text" placeholder="item name" class="form-control p-2" id="itemname">
+            <input type="text" placeholder="item price" class="form-control mx-2 p-2" id="itemprice">
+            <input type="text" placeholder="Quntity" class="form-control p-2" id="quantity">
+        </div>
+        <button type="submit" class="btn btn-info w-100  fw-bold fs-3 my-3" onclick="addtostore()">submit</button>
+        <!-- <button type="submit" class="btn btn-info w-100  fw-bold fs-3" onclick="add()">add to store</button> -->
+        <table class="table">
+            <thead class="text">
+                <tr>
+                    <td class="fw-bold fs-4">S/N</td>
+                    <td class="fw-bold fs-4">Item Name</td>
+                    <td class="fw-bold fs-4">Itim Price</td>
+                    <td class="fw-bold fs-4">Quntity</td>
+                    <td class="fw-bold fs-4">Action</td>
+                </tr>
+            </thead>
+            <tbody class="text table" id="display">
+               
+               
+            </tbody>
+        </table>
+        <script>
+            
+            var alluser = []
+            function addtostore() {
+                var display = document.getElementById("display");
+                var itemname = document.getElementById("itemname").value;
+                var itemprice = document.getElementById("itemprice").value
+                var quantity = document.getElementById("quantity").value
+                var Item = {
+                    name: itemname,
+                    price: itemprice,
+                    quantity: quantity,
+                } 
+                alluser.push(Item),
+                displayitem()
+                console.log(alluser);
+                
+            }
+
+            function displayitem() {
+                display.innerHTML = ""
+                for (var index = 0; index < alluser.length; index++) {
+                    display.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${alluser[index].name}</td>
+                        <td>${alluser[index].price}</td>
+                        <td>${alluser[index].quantity}</td>
+                        <td>
+                            <button onclick="deleteitem(${index})" class="btn btn-outline-danger">Delete</button>
+                            <button onclick="edititem(${index})" class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit</button>
+                        </td>
+
+                    </tr>
+                   
+                    `
+                }
+                itemname.value = ""
+                itemprice.value = ""
+                quantity.value = ""
+            }
+            function deleteitem(e) {
+                alluser.splice(e,1)
+                console.log(alluser);
+                displayitem()
+            }
+            let edIndex = ''
+            function edititem(e) {
+                edIndex = e
+                // var itemname=prompt("enter itemname")
+                // var itemprice=prompt("enter itemprice")
+                // var quantity=prompt("enter quntity")
+                one.value = alluser[e].name
+                two.value = alluser[e].price
+                three.value = alluser[e].quantity
+                console.log(alluser[e]);
+                // var newdetail = {
+                //     name: itemname,
+                //     Price: itemprice,
+                //     Quntiyt: quantity,
+                // } 
+                // alluser.splice(e,1,newdetail)
+                // displayitem()
+                // console.log(newdetail);
+            }
+            function update() {
+                edName = one.value;
+                edPrice = two.value;
+                edQuantity = three.value;
+                let newObj = {name:edName, price:edPrice, quantity:edQuantity}
+                console.log(newObj);
+                alluser[edIndex] = newObj;
+                displayitem();
+            }
+
+
+
+
+
+
+            // function addtostore() {
+                // var display = document.getElementById("display");
+                // var name = document.getElementById("itemname").value;
+                // var price = document.getElementById("itemprice").value
+                // var quantity = document.getElementById("quantity").value
+                // display.innerHTML = ""
+              
+            //     // var Item = {
+            //     // name: itemname.value,
+            //     // Price: itemprice.value,
+            //     // Quntiyt: quantity.value,
+            //     // } 
+            //     var cartobj = {
+            //         nm:name,
+            //         pr:price,
+            //         qt: quantity
+            //     }
+            //     alluser.push(cartobj)
+            //     console.log(alluser);
+            //     for (var index = 0; index < alluser.length; index++) {
+            //         display.innerHTML += `
+            //         <tr>
+            //             <td>${index + 1}</td>
+            //             <td>${alluser[index].nm}</td>
+            //             <td>${alluser[index].pr}</td>
+            //             <td>${alluser[index].qt}</td>
+            //             <td>
+            //                 <button onclick="deleteitem(${index})" class="btn btn-danger">Delete</button>
+            //                 <button onclick="edititem(${index})" class="btn btn-warning">Edit</button>
+            //             </td>
+
+            //         </tr>
+                   
+            //         `
+            //     }
+            //     itemname.value = ""
+            //     itemprice.value = ""
+            //     quantity.value = ""
+            // }
+            
+            // function deleteitem(e) {
+
+            //     alluser.splice(e,1)
+            // }
+
+
+
+            // var alluser = []
+            // function addtostore() {
+            //     var display = document.getElementById("display");
+            //     var name = document.getElementById("itemname").value;
+            //     var price = document.getElementById("itemprice").value
+            //     var quantity = document.getElementById("quantity").value
+            //     display.innerHTML = ""
+              
+            //     // var Item = {
+            //     // name: itemname.value,
+            //     // Price: itemprice.value,
+            //     // Quntiyt: quantity.value,
+            //     // }
+            // }
+            // function additem() {
+            //     var item = {
+            //         nm:name,
+            //         pr:price,
+            //         qt: quantity
+            //     }
+            //     alluser.push(item)
+            // }
+            // function displayitem() {
+            //     display.innerHTML += ""
+            //     for (let index = 0; index < alluser.length; index++) {
+            //         display.innerHTML += `
+            //         <h1>
+            //             ${allitem[index].name}
+            //             ${allitem[index].price}
+            //             ${allitem[index].quntity}
+            //         </h1>
+            //         <button onclick="deleteitem(${index})">Delete</button>
+            //         <button onclick="edititem(${index})">Edit</button>
+            //         `
+                    
+            //     }
+            // }
+            // function deleteitem(usersindex) {
+            //     var respose = ("u dey sure to delete")
+            //     // alluser.splice(usersindex,1)
+            //     if (respose==true) {
+            //         alluser.splice(usersindex,1)
+            //         console.log(alluser);
+            //         display()
+            //     } else {
+            //         console.log("u want to delete am");
+            //     }
+            //     console.log(a);
+            // }
+            // function edititem(usersindex) {
+            //     var itemname=prompt("enter itemname")
+            //     var itemprice=prompt("enter itemprice")
+            //     var quantity=prompt("enter quntity")
+            //     var newdetail = {
+            //         name:itemname,
+            //         price:itemprice,
+            //         quutit:quantity
+            //     }
+            //     allitem.splice(usersindex,1,newdetail)
+            //     display()
+            //     console.log(newdetail);
+            // }
+        </script>
+    </body>
+</html>
